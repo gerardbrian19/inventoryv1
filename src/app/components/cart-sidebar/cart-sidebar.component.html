@@ -1,0 +1,58 @@
+<!-- Backdrop -->
+@if (isOpen) {
+  <div class="cart-backdrop" (click)="close()"></div>
+}
+
+<!-- Drawer -->
+<div class="cart-drawer" [class.cart-drawer--open]="isOpen">
+  <div class="flex items-center justify-between p-4 border-b">
+    <h2 class="text-lg font-semibold">Your Cart</h2>
+    <button mat-icon-button (click)="close()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  @if (cartItems().length === 0) {
+    <div class="flex flex-col items-center justify-center h-64 text-gray-400">
+      <mat-icon class="text-5xl mb-3" style="font-size:3rem;width:3rem;height:3rem;">shopping_cart</mat-icon>
+      <p>Your cart is empty</p>
+    </div>
+  } @else {
+    <div class="cart-items-list">
+      @for (item of cartItems(); track item.product.id) {
+        <div class="cart-item flex gap-3 p-4">
+          <div class="cart-item-img rounded" [style.background]="item.product.imageColor"></div>
+          <div class="flex-1 min-w-0">
+            <p class="font-medium text-sm truncate">{{ item.product.name }}</p>
+            <p class="text-indigo-600 text-sm font-semibold">{{ item.product.price | currency }}</p>
+            <div class="flex items-center gap-2 mt-1">
+              <button mat-icon-button class="qty-btn" (click)="decrease(item.product.id)">
+                <mat-icon>remove</mat-icon>
+              </button>
+              <span class="text-sm font-medium w-6 text-center">{{ item.quantity }}</span>
+              <button mat-icon-button class="qty-btn" (click)="increase(item.product.id)">
+                <mat-icon>add</mat-icon>
+              </button>
+            </div>
+          </div>
+          <button mat-icon-button color="warn" (click)="remove(item.product.id)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+        <mat-divider />
+      }
+    </div>
+
+    <div class="cart-footer p-4">
+      <div class="flex justify-between mb-4">
+        <span class="font-semibold text-gray-700">Total</span>
+        <span class="font-bold text-lg text-indigo-700">{{ cartTotal() | currency }}</span>
+      </div>
+      <button mat-raised-button color="primary" class="w-full mb-2" (click)="openPayment()">
+        <mat-icon>payment</mat-icon>
+        Checkout
+      </button>
+      <button mat-stroked-button class="w-full" (click)="clearAll()">Clear Cart</button>
+    </div>
+  }
+</div>

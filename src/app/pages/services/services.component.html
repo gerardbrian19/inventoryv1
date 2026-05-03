@@ -1,0 +1,129 @@
+<div class="page-container p-6">
+
+  <div class="mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Services</h1>
+    <p class="text-gray-500 text-sm mt-1">Book a service appointment with our team</p>
+  </div>
+
+  <div class="services-layout">
+
+    <!-- Booking Form -->
+    <mat-card class="booking-card">
+      <mat-card-header class="pb-4">
+        <div class="service-icon">
+          <mat-icon>event_available</mat-icon>
+        </div>
+        <mat-card-title class="ml-3">Book a Schedule</mat-card-title>
+        <mat-card-subtitle class="ml-3">Fill in the form to schedule your appointment</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form class="flex flex-col gap-4" (ngSubmit)="submit()">
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Service Type</mat-label>
+            <mat-select [(ngModel)]="form.service" name="service">
+              @for (s of serviceTypes; track s.id) {
+                <mat-option [value]="s.name">
+                  {{ s.name }} — {{ s.duration }}
+                  @if (s.price > 0) { (${{ s.price }}) } @else { (Free) }
+                </mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix class="mr-2">build</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Preferred Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="form.date" name="date" [min]="minDate" readonly />
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-icon matPrefix class="mr-2">calendar_today</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Preferred Time</mat-label>
+            <mat-select [(ngModel)]="form.time" name="time">
+              @for (slot of timeSlots; track slot.value) {
+                <mat-option [value]="slot.label">{{ slot.label }}</mat-option>
+              }
+            </mat-select>
+            <mat-icon matPrefix class="mr-2">schedule</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Your Name</mat-label>
+            <input matInput [(ngModel)]="form.name" name="name" placeholder="Full name" />
+            <mat-icon matPrefix class="mr-2">person</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Email Address</mat-label>
+            <input matInput [(ngModel)]="form.email" name="email" type="email" placeholder="you@example.com" />
+            <mat-icon matPrefix class="mr-2">email</mat-icon>
+          </mat-form-field>
+
+          <button mat-raised-button color="primary" type="submit" class="w-full py-2 mt-2" [disabled]="submitting()">
+            @if (submitting()) {
+              Booking…
+            } @else {
+              <ng-container>
+                <mat-icon>event_available</mat-icon>
+                Book Now
+              </ng-container>
+            }
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <!-- Service Types Info -->
+    <div class="flex flex-col gap-4">
+      <mat-card class="service-info-card">
+        <mat-card-header>
+          <mat-card-title>Available Services</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="pt-3">
+          @for (s of serviceTypes; track s.id) {
+            <div class="service-row flex items-center justify-between py-3">
+              <div>
+                <p class="font-medium text-gray-800 text-sm">{{ s.name }}</p>
+                <p class="text-gray-400 text-xs">{{ s.duration }}</p>
+              </div>
+              <span class="service-price">
+                {{ s.price > 0 ? ('$' + s.price) : 'Free' }}
+              </span>
+            </div>
+            @if (!$last) { <mat-divider /> }
+          }
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Upcoming Bookings -->
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Upcoming Bookings</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="pt-3">
+          @for (booking of upcomingBookings; track booking.id) {
+            <div class="booking-row flex items-start gap-3 py-3">
+              <div class="booking-date-badge">
+                <mat-icon>event</mat-icon>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-sm text-gray-800 truncate">{{ booking.service }}</p>
+                <p class="text-xs text-gray-400">{{ booking.date }} · {{ booking.time }}</p>
+                <p class="text-xs text-gray-500">{{ booking.customer }}</p>
+              </div>
+              <span class="status-badge status-{{ booking.status.toLowerCase() }}">
+                {{ booking.status }}
+              </span>
+            </div>
+            @if (!$last) { <mat-divider /> }
+          }
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+  </div>
+</div>

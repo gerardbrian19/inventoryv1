@@ -1,0 +1,199 @@
+.payment-wrapper {
+  width: 440px;
+  max-width: 100%;
+}
+
+.payment-header-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #e8eaf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.payment-header-icon mat-icon {
+  color: #3f51b5;
+}
+
+.payment-content {
+  max-height: 64vh !important;
+  overflow-y: auto;
+}
+
+.payment-tabs {
+  margin-bottom: 4px;
+}
+
+.tab-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+/* ── GCash Card ── */
+.gcash-card {
+  background: linear-gradient(135deg, #007DC6 0%, #00a878 100%);
+  border-radius: 16px;
+  padding: 20px 22px;
+}
+
+.gcash-logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #007DC6;
+  font-weight: 900;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.gcash-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 2px;
+}
+
+.gcash-sub {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.gcash-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ── QR Placeholder ── */
+.qr-box {
+  width: 96px;
+  height: 96px;
+  border: 2px dashed #d1d5db;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-box mat-icon {
+  font-size: 56px !important;
+  width: 56px !important;
+  height: 56px !important;
+  color: #9ca3af;
+}
+
+/* ── Instructions ── */
+.instructions {
+  font-size: 0.8rem;
+  color: #6b7280;
+  padding-left: 18px;
+  line-height: 2;
+  margin: 0;
+}
+
+/* ── Bank Cards ── */
+.bank-card {
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px;
+  background: #fafafa;
+}
+
+.bank-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #e8eaf6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bank-icon mat-icon {
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
+  color: #3f51b5;
+}
+
+.bank-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.bank-label {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.bank-value {
+  font-size: 0.85rem;
+  color: #374151;
+  text-align: right;
+}
+
+.bank-note {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+}
+
+/* ── Dark Mode ── */
+.dark .payment-header-icon {
+  background: #312e81;
+}
+
+.dark .bank-card {
+  background: #252525;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+.dark .bank-icon {
+  background: #312e81;
+}
+
+.dark .bank-value {
+  color: rgba(255, 255, 255, 0.87);
+}
+
+.dark .bank-label {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.dark .bank-note {
+  background: #451a03;
+  border-color: rgba(251, 191, 36, 0.3);
+}
+
+.dark .qr-box {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.dark .qr-box mat-icon {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.dark .instructions {
+  color: rgba(255, 255, 255, 0.55);
+}

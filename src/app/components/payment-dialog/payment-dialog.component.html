@@ -1,0 +1,130 @@
+<div class="payment-wrapper">
+
+  <!-- Header -->
+  <div class="flex items-center gap-3 px-2 pt-1 pb-3">
+    <div class="payment-header-icon">
+      <mat-icon>payment</mat-icon>
+    </div>
+    <div class="flex-1">
+      <h2 class="text-lg font-bold text-gray-800">Complete Payment</h2>
+      <p class="text-sm text-gray-500">Amount due: <strong class="text-indigo-700">{{ data.total | currency }}</strong></p>
+    </div>
+    <button mat-icon-button mat-dialog-close aria-label="Close dialog">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <mat-dialog-content class="payment-content">
+
+    <mat-tab-group animationDuration="200ms" class="payment-tabs">
+
+      <!-- ── GCash Tab ── -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">smartphone</mat-icon>
+          GCash
+        </ng-template>
+
+        <div class="gcash-card mt-4">
+          <div class="flex items-center gap-2 mb-4">
+            <div class="gcash-logo">G</div>
+            <span class="text-white font-bold text-xl tracking-wide">GCash</span>
+          </div>
+          <p class="gcash-label">Amount to Send</p>
+          <p class="text-white text-3xl font-bold mb-4">{{ data.total | currency }}</p>
+          <div class="gcash-divider mb-3"></div>
+          <p class="gcash-label">GCash Number</p>
+          <p class="text-white font-bold text-xl tracking-widest mb-1">{{ gcash.number }}</p>
+          <p class="gcash-sub">{{ gcash.accountName }}</p>
+        </div>
+
+        <div class="qr-section flex flex-col items-center mt-4">
+          <div class="qr-box">
+            <mat-icon>qr_code_2</mat-icon>
+          </div>
+          <p class="text-gray-400 text-xs mt-2">Scan with GCash app to pay instantly</p>
+        </div>
+
+        <ol class="instructions mt-3">
+          <li>Open your <strong>GCash</strong> app</li>
+          <li>Tap <strong>Send Money → GCash</strong></li>
+          <li>Enter number: <strong>{{ gcash.number }}</strong></li>
+          <li>Enter amount: <strong>{{ data.total | currency }}</strong></li>
+          <li>Save the reference number and enter it below</li>
+        </ol>
+      </mat-tab>
+
+      <!-- ── Bank Transfer Tab ── -->
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">account_balance</mat-icon>
+          Bank Transfer
+        </ng-template>
+
+        <div class="flex flex-col gap-3 mt-4">
+          @for (bank of banks; track bank.name) {
+            <div class="bank-card">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="bank-icon">
+                  <mat-icon>account_balance</mat-icon>
+                </div>
+                <span class="font-bold text-gray-800">{{ bank.name }}</span>
+              </div>
+              <div class="bank-details">
+                <div class="bank-row">
+                  <span class="bank-label">Account No.</span>
+                  <span class="bank-value font-mono font-semibold">{{ bank.accountNumber }}</span>
+                </div>
+                <div class="bank-row">
+                  <span class="bank-label">Account Name</span>
+                  <span class="bank-value">{{ bank.accountName }}</span>
+                </div>
+                <div class="bank-row">
+                  <span class="bank-label">Branch</span>
+                  <span class="bank-value">{{ bank.branch }}</span>
+                </div>
+                <div class="bank-row">
+                  <span class="bank-label">Amount</span>
+                  <span class="bank-value font-bold text-indigo-700">{{ data.total | currency }}</span>
+                </div>
+              </div>
+            </div>
+          }
+
+          <div class="bank-note flex items-start gap-2 p-3 rounded-lg">
+            <mat-icon class="text-amber-500 text-sm" style="font-size:18px;width:18px;height:18px;flex-shrink:0;margin-top:2px">info</mat-icon>
+            <p class="text-xs text-gray-500">Transfer must be completed within <strong>24 hours</strong>. Include your name and order number in the remarks.</p>
+          </div>
+        </div>
+      </mat-tab>
+
+    </mat-tab-group>
+
+    <!-- Reference Number -->
+    <mat-form-field appearance="outline" class="w-full mt-4">
+      <mat-label>Reference / Transaction Number</mat-label>
+      <input
+        matInput
+        [(ngModel)]="referenceNumber"
+        placeholder="e.g. 2026050312345"
+        autocomplete="off"
+      />
+      <mat-icon matPrefix class="mr-2">tag</mat-icon>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <!-- Actions -->
+  <mat-dialog-actions align="end" class="px-4 pb-3 gap-2">
+    <button mat-stroked-button mat-dialog-close>Cancel</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="confirm()"
+      [disabled]="confirming()"
+    >
+      @if (confirming()) { Processing… } @else { Confirm Payment }
+    </button>
+  </mat-dialog-actions>
+
+</div>

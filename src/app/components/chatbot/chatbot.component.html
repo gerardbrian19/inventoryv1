@@ -1,0 +1,61 @@
+<!-- Floating Action Button -->
+<button mat-fab color="primary" class="chatbot-fab" (click)="toggle()" aria-label="Open chat">
+  @if (isOpen()) {
+    <mat-icon>close</mat-icon>
+  } @else {
+    <mat-icon>chat</mat-icon>
+  }
+</button>
+
+<!-- Chat Panel -->
+@if (isOpen()) {
+  <div class="chat-panel">
+    <!-- Header -->
+    <div class="chat-header flex items-center gap-3 px-4 py-3">
+      <div class="bot-avatar">
+        <mat-icon>smart_toy</mat-icon>
+      </div>
+      <div>
+        <p class="font-semibold text-sm">InvenBot</p>
+        <p class="text-xs text-indigo-200">Always online</p>
+      </div>
+      <span class="flex-1"></span>
+      <button mat-icon-button (click)="toggle()">
+        <mat-icon class="text-white">minimize</mat-icon>
+      </button>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" #messagesContainer>
+      @for (msg of messages(); track $index) {
+        <div class="msg-row" [class.msg-row--user]="msg.from === 'user'">
+          @if (msg.from === 'bot') {
+            <div class="bot-bubble">
+              <p class="text-sm">{{ msg.text }}</p>
+              <span class="msg-time">{{ msg.time }}</span>
+            </div>
+          } @else {
+            <div class="user-bubble">
+              <p class="text-sm">{{ msg.text }}</p>
+              <span class="msg-time text-indigo-200">{{ msg.time }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-area flex items-center gap-2 px-3 py-2">
+      <input
+        class="chat-input flex-1"
+        [(ngModel)]="inputText"
+        (keydown)="onKeydown($event)"
+        placeholder="Type a message..."
+        autocomplete="off"
+      />
+      <button mat-icon-button color="primary" (click)="send()" [disabled]="!inputText.trim()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </div>
+}

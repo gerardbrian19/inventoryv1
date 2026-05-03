@@ -1,0 +1,16 @@
+.navbar-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.nav-link-btn {
+  font-size: 0.875rem !important;
+  letter-spacing: 0.01em;
+}
+
+.nav-active {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-radius: 4px;
+}
